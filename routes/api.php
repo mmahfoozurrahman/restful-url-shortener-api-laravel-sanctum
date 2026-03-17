@@ -1,7 +1,11 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\UrlController;
+use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
+
+
 
 // পাবলিক রাউটস (যেখানে টোকেন লাগবে না)
 Route::post('/register', [AuthController::class , 'register']);
@@ -19,8 +23,17 @@ Route::get('/login', function () {
 
 Route::get('/testapi', [AuthController::class , 'testapi']);
 
+Route::get('/{code}', [UrlController::class , 'redirect']);
+
 // প্রোটেক্টেড রাউটস (যেখানে লগইন করা থাকা বাধ্যতামূলক)
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class , 'me']);
+
+    // User Profile Routes
+    Route::get('/user', [UserController::class , 'show']);
+    Route::put('/user', [UserController::class , 'update']);
+    Route::delete('/user', [UserController::class , 'destroy']);
+
+    Route::apiResource('urls', UrlController::class);
     Route::post('/logout', [AuthController::class , 'logout']);
 });
