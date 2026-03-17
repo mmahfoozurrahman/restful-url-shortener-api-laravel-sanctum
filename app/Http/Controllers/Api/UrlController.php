@@ -48,15 +48,18 @@ class UrlController extends Controller
     // ৩. নির্দিষ্ট একটি লিঙ্কের ডিটেইলস দেখা
     public function show($id)
     {
-        $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
+        // $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
+        $url = ShortenedUrl::findOrFail($id);
+        $this->authorize('view', $url);
         return response()->json($url);
     }
 
     // ৪. লিঙ্ক আপডেট করা (যেমন: আসল ইউআরএল বা মেয়াদ পরিবর্তন)
     public function update(Request $request, $id)
     {
-        $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
-
+        // $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
+        $url = ShortenedUrl::findOrFail($id);
+        $this->authorize('update', $url);
         //dd($request->all());
 
         $validator = Validator::make($request->all(), [
@@ -78,7 +81,9 @@ class UrlController extends Controller
     // ৫. লিঙ্ক ডিলিট করা
     public function destroy($id)
     {
-        $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
+        // $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
+        $url = ShortenedUrl::findOrFail($id);
+        $this->authorize('delete', $url);
         $url->delete();
 
         return response()->json(null, 204);
