@@ -4,21 +4,21 @@ A robust and secure URL shortener API built with **Laravel 12** and **Sanctum**.
 
 ---
 
-## 🚀 Features
+##  Features
 
-### 🔐 Authentication & Profile
+###  Authentication & Profile
 - **User Registration & Login**: Securely register and authenticate users via Laravel Sanctum.
 - **Token-based Security**: Protected routes ensure only authorized users can manage their URLs.
 - **Profile Management**: View and update user profile details (name, email).
 - **Account Deletion**: Safely delete accounts with cascading deletion of all associated short links.
 
-### ✂️ URL Shortening & Management
+###  URL Shortening & Management
 - **Automatic Shortening**: Generates a unique 10-character code for every long URL.
 - **URL Validation**: Ensures only valid URL formats are shortened.
 - **Expiration Dates**: Set optional expiry for links (default: 1 week). Expired links are automatically handled.
 - **Full CRUD Support**: List (paginated), view, update (original URL or expiry), and delete your own shortened links.
 
-### 📈 Redirection & Analytics
+###  Redirection & Analytics
 - **Seamless Redirection**: Instantly redirects short codes to the target long URL.
 - **Click Tracking**: Automatically increments a click counter every time a link is visited.
 - **Status Codes**: 
@@ -28,16 +28,16 @@ A robust and secure URL shortener API built with **Laravel 12** and **Sanctum**.
 
 ---
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
-- **Framework**: [Laravel 11](https://laravel.com/)
+- **Framework**: [Laravel 12](https://laravel.com/)
 - **Authentication**: [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
-- **Database**: MySQL / PostgreSQL / SQLite
+- **Database**: MySQL
 - **Tools**: PHP 8.2+, Composer
 
 ---
 
-## 💻 Local Setup & Installation
+##  Local Setup & Installation
 
 Follow these steps to get the project running on your local machine:
 
@@ -68,7 +68,7 @@ Follow these steps to get the project running on your local machine:
 
 ---
 
-## 📡 API Endpoints
+##  API Endpoints
 
 ### Public Routes
 - `POST /api/register` - Create a new account.
@@ -91,12 +91,9 @@ Follow these steps to get the project running on your local machine:
 
 ---
 
-## 🧪 Testing with Postman
+##  Testing with Postman
 1. Use the **Register** endpoint to create a user.
 2. Use the **Login** endpoint to get your token.
 3. Add the token to the **Authorization header** as `Bearer <your_token>` for all protected routes.
 
----
-
-## 📜 License
-This project is open-sourced software licensed under the [MIT license](LICENSE).
+⭐ **If this project helped you, please give it a star!** ⭐
