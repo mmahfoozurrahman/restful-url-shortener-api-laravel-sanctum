@@ -18,7 +18,7 @@ Route::post('/login', [AuthController::class , 'login']);
 Route::get('/login', function () {
     return response()->json([
     'message' => 'Login API only supports post method or you tried to access without token or you tried with wrong token',
-    ], 401);
+    ], 403);
 })->name('login');
 
 Route::get('/testapi', [AuthController::class , 'testapi']);
