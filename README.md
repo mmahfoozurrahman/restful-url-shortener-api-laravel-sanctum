@@ -47,9 +47,8 @@ A robust and secure URL shortener API built with **Laravel 12** and **Sanctum**.
 ### Protected Routes (Requires Bearer Token)
 
 #### Profile Management (`/api/user`)
-- `GET /api/me` - Get current authenticated user details.
 - `POST /api/logout` - Revoke the current access token.
-- `GET /api/user` - View profile information.
+- `GET /api/user` - Get current authenticated user details.
 - `PUT /api/user` - Update profile information.
 - `DELETE /api/user` - Delete account and all data.
 
