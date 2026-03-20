@@ -1,59 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🔗 Restful URL Shortener API (Laravel Sanctum)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A robust and secure URL shortener API built with **Laravel 11** and **Sanctum**. This project allows users to create, manage, and track shortened links while ensuring secure access through token-based authentication.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🚀 Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 🔐 Authentication & Profile
+- **User Registration & Login**: Securely register and authenticate users via Laravel Sanctum.
+- **Token-based Security**: Protected routes ensure only authorized users can manage their URLs.
+- **Profile Management**: View and update user profile details (name, email).
+- **Account Deletion**: Safely delete accounts with cascading deletion of all associated short links.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### ✂️ URL Shortening & Management
+- **Automatic Shortening**: Generates a unique 10-character code for every long URL.
+- **URL Validation**: Ensures only valid URL formats are shortened.
+- **Expiration Dates**: Set optional expiry for links (default: 1 week). Expired links are automatically handled.
+- **Full CRUD Support**: List (paginated), view, update (original URL or expiry), and delete your own shortened links.
 
-## Learning Laravel
+### 📈 Redirection & Analytics
+- **Seamless Redirection**: Instantly redirects short codes to the target long URL.
+- **Click Tracking**: Automatically increments a click counter every time a link is visited.
+- **Status Codes**: 
+  - `302 Found` for successful redirection.
+  - `410 Gone` for expired links.
+  - `404 Not Found` for invalid short codes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Tech Stack
 
-## Laravel Sponsors
+- **Framework**: [Laravel 11](https://laravel.com/)
+- **Authentication**: [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
+- **Database**: MySQL / PostgreSQL / SQLite
+- **Tools**: PHP 8.2+, Composer
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+---
 
-### Premium Partners
+## 💻 Local Setup & Installation
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Follow these steps to get the project running on your local machine:
 
-## Contributing
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/mmahfoozurrahman/restful-url-shortener-api-laravel-sanctum.git
+   cd restful-url-shortener-api-laravel-sanctum
+   ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Quick Setup (Recommended)**:
+   This project includes a handy shortcut that installs dependencies, sets up the environment, and runs migrations automatically:
+   ```bash
+   composer setup
+   ```
+   *Note: Ensure your database details in `.env` are correct before running migrations.*
 
-## Code of Conduct
+3. **Alternative Manual Setup**:
+   - **Install Dependencies**: `composer install`
+   - **Environment File**: `cp .env.example .env` (Update your database credentials in `.env`)
+   - **App Key**: `php artisan key:generate`
+   - **Migrations**: `php artisan migrate`
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+4. **Serve the Application**:
+   ```bash
+   php artisan serve
+   ```
+   The API will be available at `http://127.0.0.1:8000`.
 
-## Security Vulnerabilities
+---
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 📡 API Endpoints
 
-## License
+### Public Routes
+- `POST /api/register` - Create a new account.
+- `POST /api/login` - Authenticate and get a Bearer token.
+- `GET /{code}` - Redirect to the original URL using the short code.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Protected Routes (Requires Bearer Token)
+- `GET /api/me` - Get current authenticated user details.
+- `POST /api/logout` - Revoke the current access token.
+- `GET /api/user` - View profile information.
+- `PUT /api/user` - Update profile information.
+- `DELETE /api/user` - Delete account and all data.
+
+#### URL Management (`/api/urls`)
+- `GET /api/urls` - List all urls belonging to the user (Paginated).
+- `POST /api/urls` - Shorten a new URL.
+- `GET /api/urls/{id}` - View details of a specific shortened URL.
+- `PUT /api/urls/{id}` - Update a URL or its expiration date.
+- `DELETE /api/urls/{id}` - Delete a shortened URL.
+
+---
+
+## 🧪 Testing with Postman
+1. Use the **Register** endpoint to create a user.
+2. Use the **Login** endpoint to get your token.
+3. Add the token to the **Authorization header** as `Bearer <your_token>` for all protected routes.
+
+---
+
+## 📜 License
+This project is open-sourced software licensed under the [MIT license](LICENSE).

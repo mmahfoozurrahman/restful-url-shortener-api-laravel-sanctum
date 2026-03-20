@@ -6,6 +6,7 @@ use App\Models\ShortenedUrl;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
+
 class ShortenedUrlPolicy
 {
     /**
@@ -13,6 +14,7 @@ class ShortenedUrlPolicy
      */
     public function view(User $user, ShortenedUrl $shortenedUrl): bool
     {
+        //echo 'inside policy view';
         return $user->id === $shortenedUrl->user_id;
     }
 

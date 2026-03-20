@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShortenedUrl;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -11,6 +13,7 @@ use Illuminate\Support\Str;
 
 class UrlController extends Controller
 {
+    use AuthorizesRequests;
     // ১. ইউজার শুধুমাত্র নিজের তৈরি করা সব লিঙ্ক দেখতে পাবেন (Pagination সহ)
     public function index()
     {
@@ -35,10 +38,15 @@ class UrlController extends Controller
 
         $expiryDate = $request->expires_at ?? now()->addWeek();
 
+        // checking uniqueness of short code
+        do {
+            $shortCode = Str::random(10);
+        } while (ShortenedUrl::where('short_code', $shortCode)->exists());
+
         $url = ShortenedUrl::create([
             'user_id' => Auth::id(),
             'original_url' => $request->original_url,
-            'short_code' => Str::random(6), // ৬ অক্ষরের র্যান্ডম কোড
+            'short_code' => $shortCode,
             'expires_at' => $expiryDate,
         ]);
 
@@ -49,8 +57,23 @@ class UrlController extends Controller
     public function show($id)
     {
         // $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
-        $url = ShortenedUrl::findOrFail($id);
-        $this->authorize('view', $url);
+        $url = ShortenedUrl::find($id);
+        if (!$url) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'URL not found'
+            ], 404);
+        }
+        //dd('inside how method');        
+        if (auth()->user()->cannot('view', $url)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'This link is not yours, so you cannot view it'
+            ], 403);
+        }
+        $url->load(['user' => function ($query) {
+            $query->select('id', 'name', 'email');
+        }]);
         return response()->json($url);
     }
 
@@ -58,9 +81,20 @@ class UrlController extends Controller
     public function update(Request $request, $id)
     {
         // $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
-        $url = ShortenedUrl::findOrFail($id);
-        $this->authorize('update', $url);
-        //dd($request->all());
+        $url = ShortenedUrl::find($id);
+        if (!$url) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'URL not found'
+            ], 404);
+        }
+
+        if (auth()->user()->cannot('update', $url)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'This link is not yours, so you cannot update it'
+            ], 403);
+        }
 
         $validator = Validator::make($request->all(), [
             'original_url' => 'sometimes|url',
@@ -82,8 +116,21 @@ class UrlController extends Controller
     public function destroy($id)
     {
         // $url = ShortenedUrl::where('user_id', Auth::id())->findOrFail($id);
-        $url = ShortenedUrl::findOrFail($id);
-        $this->authorize('delete', $url);
+        $url = ShortenedUrl::find($id);
+        if (!$url) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'URL not found'
+            ], 404);
+        }
+
+        if (auth()->user()->cannot('delete', $url)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'This link is not yours, so you cannot delete it'
+            ], 403);
+        }
+
         $url->delete();
 
         return response()->json(null, 204);

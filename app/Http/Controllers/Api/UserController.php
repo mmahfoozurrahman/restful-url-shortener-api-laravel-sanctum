@@ -12,6 +12,7 @@ class UserController extends Controller
     // ১. নিজের প্রোফাইল দেখা (View Profile)
     public function show()
     {
+        //dd('inside show method');
         return response()->json(Auth::user());
     }
 

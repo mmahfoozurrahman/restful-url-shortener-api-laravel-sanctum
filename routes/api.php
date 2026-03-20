@@ -23,7 +23,6 @@ Route::get('/login', function () {
 
 Route::get('/testapi', [AuthController::class , 'testapi']);
 
-Route::get('/{code}', [UrlController::class , 'redirect']);
 
 // প্রোটেক্টেড রাউটস (যেখানে লগইন করা থাকা বাধ্যতামূলক)
 Route::middleware('auth:sanctum')->group(function () {
@@ -37,3 +36,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('urls', UrlController::class);
     Route::post('/logout', [AuthController::class , 'logout']);
 });
+
+Route::get('/{code}', [UrlController::class , 'redirect']);

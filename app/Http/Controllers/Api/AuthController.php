@@ -70,7 +70,7 @@ class AuthController extends Controller
         $token = $user->createToken('api-token')->plainTextToken;
 
         return response()->json([
-            'user' => $user,
+            //'user' => $user,
             'token' => $token
         ]);
     }
@@ -85,6 +85,7 @@ class AuthController extends Controller
 
     public function me(Request $request)
     {
-        return response()->json($request->user());
+        echo 'inside me for testing api method after login';
+    //return response()->json($request->user());
     }
 }
