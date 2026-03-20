@@ -1,6 +1,6 @@
 # 🔗 Restful URL Shortener API (Laravel Sanctum)
 
-A robust and secure URL shortener API built with **Laravel 11** and **Sanctum**. This project allows users to create, manage, and track shortened links while ensuring secure access through token-based authentication.
+A robust and secure URL shortener API built with **Laravel 12** and **Sanctum**. This project allows users to create, manage, and track shortened links while ensuring secure access through token-based authentication.
 
 ---
 
