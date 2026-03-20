@@ -76,6 +76,8 @@ Follow these steps to get the project running on your local machine:
 - `GET /{code}` - Redirect to the original URL using the short code.
 
 ### Protected Routes (Requires Bearer Token)
+
+#### Profile Management (`/api/user`)
 - `GET /api/me` - Get current authenticated user details.
 - `POST /api/logout` - Revoke the current access token.
 - `GET /api/user` - View profile information.
