@@ -41,13 +41,15 @@ class UserController extends Controller
     }
 
     // ৩. অ্যাকাউন্ট ডিলিট করা (Delete Account)
-    public function destroy()
+    public function destroy(Request $request)
     {
         $user = Auth::user();
 
         // যেহেতু আমরা মাইগ্রেশনে onDelete('cascade') দিয়েছি, 
         // ইউজার ডিলিট হলে তার সব শর্ট লিঙ্কও অটোমেটিক ডিলিট হয়ে যাবে।
         $user->delete();
+
+        $request->user()->currentAccessToken()->delete();
 
         return response()->json([
             'message' => 'Account and all associated URLs deleted successfully'
