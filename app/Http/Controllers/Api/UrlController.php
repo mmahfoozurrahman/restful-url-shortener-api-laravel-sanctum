@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ShortenedUrl;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -13,7 +11,7 @@ use Illuminate\Support\Str;
 
 class UrlController extends Controller
 {
-    use AuthorizesRequests;
+
     // ১. ইউজার শুধুমাত্র নিজের তৈরি করা সব লিঙ্ক দেখতে পাবেন (Pagination সহ)
     public function index()
     {
@@ -136,6 +134,7 @@ class UrlController extends Controller
         return response()->json(null, 204);
     }
 
+    // ৬. শর্ট লিঙ্ক রিডাইরেক্ট করা
     public function redirect($code)
     {
         $url = ShortenedUrl::where('short_code', $code)->first();

@@ -12,7 +12,7 @@ Route::post('/register', [AuthController::class , 'register']);
 Route::get('/register', function () {
     return response()->json([
     'message' => 'Register API only supports post method',
-    ], 422);
+    ], 401);
 });
 Route::post('/login', [AuthController::class , 'login']);
 Route::get('/login', function () {
