@@ -4,6 +4,15 @@ A robust and secure URL shortener API built with **Laravel 12** and **Sanctum**.
 
 ---
 
+##  Tech Stack
+
+- **Framework**: [Laravel 12](https://laravel.com/)
+- **Authentication**: [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
+- **Database**: MySQL
+- **Tools**: PHP 8.2+, Composer
+
+---
+
 ##  Features
 
 ###  Authentication & Profile
@@ -28,12 +37,28 @@ A robust and secure URL shortener API built with **Laravel 12** and **Sanctum**.
 
 ---
 
-##  Tech Stack
+##  API Endpoints
 
-- **Framework**: [Laravel 12](https://laravel.com/)
-- **Authentication**: [Laravel Sanctum](https://laravel.com/docs/11.x/sanctum)
-- **Database**: MySQL
-- **Tools**: PHP 8.2+, Composer
+### Public Routes
+- `POST /api/register` - Create a new account.
+- `POST /api/login` - Authenticate and get a Bearer token.
+- `GET /{code}` - Redirect to the original URL using the short code.
+
+### Protected Routes (Requires Bearer Token)
+
+#### Profile Management (`/api/user`)
+- `GET /api/me` - Get current authenticated user details.
+- `POST /api/logout` - Revoke the current access token.
+- `GET /api/user` - View profile information.
+- `PUT /api/user` - Update profile information.
+- `DELETE /api/user` - Delete account and all data.
+
+#### URL Management (`/api/urls`)
+- `GET /api/urls` - List all urls belonging to the user (Paginated).
+- `POST /api/urls` - Shorten a new URL.
+- `GET /api/urls/{id}` - View details of a specific shortened URL.
+- `PUT /api/urls/{id}` - Update a URL or its expiration date.
+- `DELETE /api/urls/{id}` - Delete a shortened URL.
 
 ---
 
@@ -65,31 +90,6 @@ Follow these steps to get the project running on your local machine:
    php artisan serve
    ```
    The API will be available at `http://127.0.0.1:8000`.
-
----
-
-##  API Endpoints
-
-### Public Routes
-- `POST /api/register` - Create a new account.
-- `POST /api/login` - Authenticate and get a Bearer token.
-- `GET /{code}` - Redirect to the original URL using the short code.
-
-### Protected Routes (Requires Bearer Token)
-
-#### Profile Management (`/api/user`)
-- `GET /api/me` - Get current authenticated user details.
-- `POST /api/logout` - Revoke the current access token.
-- `GET /api/user` - View profile information.
-- `PUT /api/user` - Update profile information.
-- `DELETE /api/user` - Delete account and all data.
-
-#### URL Management (`/api/urls`)
-- `GET /api/urls` - List all urls belonging to the user (Paginated).
-- `POST /api/urls` - Shorten a new URL.
-- `GET /api/urls/{id}` - View details of a specific shortened URL.
-- `PUT /api/urls/{id}` - Update a URL or its expiration date.
-- `DELETE /api/urls/{id}` - Delete a shortened URL.
 
 ---
 
