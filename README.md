@@ -82,7 +82,12 @@ Follow these steps to get the project running on your local machine:
    - **Install Dependencies**: `composer install`
    - **Environment File**: `cp .env.example .env` (Update your database credentials in `.env`)
    - **App Key**: `php artisan key:generate`
-   - **Migrations**: `php artisan migrate`
+   - **Set Up API & Sanctum**: 
+     ```bash
+     php artisan install:api
+     ```
+     *(This command ensures the API routing is enabled and Sanctum is correctly configured for token-based authentication.)*
+   - **Run Migrations**: `php artisan migrate`
 
 4. **Serve the Application**:
    ```bash
