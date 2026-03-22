@@ -30,10 +30,17 @@ A robust and secure URL shortener API built with **Laravel 12** and **Sanctum**.
 ###  Redirection & Analytics
 - **Seamless Redirection**: Instantly redirects short codes to the target long URL.
 - **Click Tracking**: Automatically increments a click counter every time a link is visited.
-- **Status Codes**: 
-  - `302 Found` for successful redirection.
-  - `410 Gone` for expired links.
-  - `404 Not Found` for invalid short codes.
+
+###  API Status Codes & Behaviors
+- **200 OK**: Request successful (Profile view, URL listing, profile updates).
+- **201 Created**: Resource created (User registration, new short link).
+- **204 No Content**: Action completed successfully (Logout, URL deletion).
+- **302 Found**: Successful redirection to the target URL.
+- **401 Unauthorized**: Invalid credentials or missing authentication token.
+- **403 Forbidden**: Accessing a resource you don’t own (Policy restriction) or unauthorized route access.
+- **404 Not Found**: Specified resource or short code does not exist.
+- **410 Gone**: Shortened URL has expired.
+- **422 Unprocessable Entity**: Validation failed (e.g., invalid URL, duplicate email, missing fields).
 
 ---
 
